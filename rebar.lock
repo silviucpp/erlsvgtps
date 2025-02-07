@@ -1,0 +1,4 @@
+[{<<"erlxml">>,
+  {git,"https://github.com/silviucpp/erlxml.git",
+       {ref,"3e4f041c05dc064b7de1f92df7f5e33b597b666a"}},
+  0}].
