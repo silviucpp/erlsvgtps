@@ -1,10 +1,10 @@
 # erlsvgtps
 
-[![Build Status](https://app.travis-ci.com/silviucpp/erlsvgtps.svg?branch=master)](https://travis-ci.com/github/silviucpp/erlsvgtps)
-[![GitHub](https://img.shields.io/github/license/silviucpp/erlsvgtps)](https://github.com/silviucpp/erlsvgtps/blob/master/LICENSE)
+[![Build Status](https://app.travis-ci.com/silviucpp/erlsvgtps.svg?branch=main)](https://travis-ci.com/github/silviucpp/erlsvgtps)
+[![GitHub](https://img.shields.io/github/license/silviucpp/erlsvgtps)](https://github.com/silviucpp/erlsvgtps/blob/main/LICENSE)
 [![Hex.pm](https://img.shields.io/hexpm/v/erlsvgtps)](https://hex.pm/packages/erlsvgtps)
 
-SVG (Portable and Secure) converter for BIMI compliance. Project inspired by [php-svg-ps-converter][1].
+Erlang SVG (Portable and Secure) converter for BIMI compliance. Project inspired by [php-svg-ps-converter][1].
 
 ## Summary
 
