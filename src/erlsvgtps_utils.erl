@@ -5,6 +5,8 @@
     lookup/3,
     lookup_float/2,
     lookup_float/3,
+    delete/2,
+    add_or_replace/3,
     bin2number/2,
     local_name/1
 ]).
@@ -41,6 +43,11 @@ lookup_float(Key, List, Default) ->
             Default
     end.
 
+delete(Key, List) ->
+    lists:keydelete(Key, 1, List).
+
+add_or_replace(Key, NewValue, List) ->
+    lists:keystore(Key, 1, List, {Key, NewValue}).
 
 bin2number(null, Default) ->
     Default;
@@ -58,9 +65,9 @@ bin2number(V, Default) ->
     end.
 
 local_name(FullName) ->
-case binary:split(FullName, <<":">>, [global]) of
-    [_Namespace, LocalName] ->
-        LocalName;
-    [LocalName] ->
-        LocalName
-end.
+    case binary:split(FullName, <<":">>, [global]) of
+        [_Namespace, LocalName] ->
+            LocalName;
+        [LocalName] ->
+            LocalName
+    end.

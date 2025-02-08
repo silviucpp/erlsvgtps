@@ -93,8 +93,26 @@ logos_test() ->
         Image = erlsvgtps_utils:lookup(<<"logo">>, Args),
         ExpectedErrors = lists:sort(erlsvgtps_utils:lookup(<<"issues_excepted">>, Args)),
 
-        {ok, State} = erlsvgtps:from_file(<<"test/assets/", Image/binary>>),
-        Issues = lists:sort(erlsvgtps:issues(State)),
+        {ok, State} = erlsvgtps_check:from_file(<<"test/assets/", Image/binary>>),
+        Issues = lists:sort(erlsvgtps_check:issues(State)),
         ?assertEqual({TestName, ExpectedErrors}, {TestName, Issues})
     end, ?LOGOS).
 
+converter_test() ->
+    NotFixableIssues = [
+        <<"Logo is larger than 32KB">>,
+        <<"Element <image> is not allowed">>,
+        <<"SVG is not square">>
+    ],
+
+    lists:foreach(fun({TestName, Args}) ->
+        Image = erlsvgtps_utils:lookup(<<"logo">>, Args),
+        SvgFile = <<"test/assets/", Image/binary>>,
+
+        {ok, NewSvgContent} = erlsvgtps_converter:from_file(SvgFile),
+        {ok, StateAfter} = erlsvgtps_check:from_buffer(NewSvgContent),
+        IssuesAfter0 = erlsvgtps_check:issues(StateAfter),
+        IssuesAfter = lists:foldl(fun(X, Acc) -> sets:del_element(X, Acc) end, sets:from_list(IssuesAfter0), NotFixableIssues),
+        ?assertEqual({TestName, []}, {TestName, sets:to_list(IssuesAfter)})
+
+    end, ?LOGOS).

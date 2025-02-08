@@ -18,14 +18,14 @@
 
 rectangular_test() ->
     lists:foreach(fun({TestName, Svg}) ->
-        {ok, State} = erlsvgtps:from_buffer(Svg),
-        ?assertEqual({TestName, false}, {TestName, erlsvgtps:is_square(State)})
+        {ok, State} = erlsvgtps_check:from_buffer(Svg),
+        ?assertEqual({TestName, false}, {TestName, erlsvgtps_check:is_square(State)})
     end, ?RECTANGULAR).
 
 square_test() ->
     lists:foreach(fun({TestName, Svg}) ->
-        {ok, State} = erlsvgtps:from_buffer(Svg),
-        ?assertEqual({TestName, true}, {TestName, erlsvgtps:is_square(State)})
+        {ok, State} = erlsvgtps_check:from_buffer(Svg),
+        ?assertEqual({TestName, true}, {TestName, erlsvgtps_check:is_square(State)})
     end, ?SQUARE).
 
 malformed_view_box_test() ->
@@ -35,6 +35,6 @@ malformed_view_box_test() ->
              xmlns:xlink=\"http://www.w3.org/1999/xlink\"
              preserveAspectRatio=\"xMidYMid\">
         </svg>">>,
-    ?assertMatch({ok, _}, erlsvgtps:from_buffer(Svg)).
+    ?assertMatch({ok, _}, erlsvgtps_check:from_buffer(Svg)).
 
 

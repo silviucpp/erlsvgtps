@@ -1,4 +1,4 @@
--module(erlsvgtps).
+-module(erlsvgtps_check).
 
 -include_lib("erlxml/include/erlxml.hrl").
 -include("erlsvgtps.hrl").
@@ -114,7 +114,7 @@ check_title(SvgEl, Issues) ->
     end,
     case Title of
         null ->
-            {null,sets:add_element(<<"Missing <title> element">>, Issues)};
+            {null, sets:add_element(<<"Missing <title> element">>, Issues)};
         _ ->
             case SvgEl#xmlel.children of
                 [#xmlel{name = <<"title">>}|_] ->
@@ -148,6 +148,11 @@ check_svg_descendant_issues(#xmlel{children = Children} = Element, Issues) ->
 check_svg_descendant_issues(#xmlcdata{}, Issues) ->
     Issues.
 
+identify_children_issues([Child | Rest], Issues) ->
+    identify_children_issues(Rest, check_svg_descendant_issues(Child, Issues));
+identify_children_issues([], Issues) ->
+    Issues.
+
 check_element(#xmlel{name = Name0, attrs = Attributes}, Issues) ->
     LocalName = erlsvgtps_utils:local_name(Name0),
 
@@ -172,11 +177,6 @@ check_attributes(LocalName, [{AttrName, _} | Rest], AllowedAttrs, Issues) ->
             check_attributes(LocalName, Rest, AllowedAttrs, sets:add_element(<<"Element <", LocalName/binary, "> has a disallowed attribute: ", AttrName/binary>>, Issues))
     end;
 check_attributes(_, [], _, Issues) ->
-    Issues.
-
-identify_children_issues([Child | Rest], Issues) ->
-    identify_children_issues(Rest, check_svg_descendant_issues(Child, Issues));
-identify_children_issues([], Issues) ->
     Issues.
 
 is_svg_square(Element) ->
