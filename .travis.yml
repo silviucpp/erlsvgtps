@@ -17,8 +17,7 @@ matrix:
       otp_release: 26.1.1
 
 before_script:
-
-- curl https://s3.amazonaws.com/rebar3/rebar3 --output rebar3 && chmod +x rebar3
+    - curl https://s3.amazonaws.com/rebar3/rebar3 --output rebar3 && chmod +x rebar3
 
 script:
     - ./rebar3 compile

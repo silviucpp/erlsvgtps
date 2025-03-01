@@ -2,7 +2,7 @@
     {description, "SVG (Portable and Secure) converter for BIMI compliance."},
     {licenses, ["MIT"]},
     {links,[{"Github","https://github.com/silviucpp/erlsvgtps"}]},
-    {vsn, "1.0.0"},
+    {vsn, "1.1.0"},
     {registered, []},
     {applications, [
         kernel,
